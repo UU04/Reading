@@ -1,0 +1,36 @@
+%DNR% [!] # ***
+
+*** abc
+# bdf
+-kkk kkkk -- kkk
+
+username:steve
+uuid:---------
+userID:-----------
+
+Inventory inspection report - - - - -
+
+[!] This report was made because the user above had suspicious activity.
+
+1. Inspecter : system(auto - generated)
+2. target : (above)
+
+<Evidence A> below is user's inventory at 2024-10-21 14:23:48
+
+1. wooden_shovel x1
+2. diamond x730
+3.
+4.
+5.
+6.
+
+<Evidence B> user's location at 2024-10-21 14:23:48
+
+(32, 99, 43) [null] - world
+
+<Evidence C> user's nearby players at 2024-10-21 14:23:48
+(radius: 15m)
+
+steve[0000-0A00]
+steve2[0000-0A00]
+steve3[0000-0A00]

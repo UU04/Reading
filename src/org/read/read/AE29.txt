@@ -1,0 +1,44 @@
+%DNR% #
+Chat Channel History maker -dtz v 1.0
+
+#1
+hi
+#2
+hi22
+#3
+hi333
+
+###############################
+
+Channel Code : PUBLIC-AE29
+Active for : 16 Hours 30 Minutes .00
+
+History Requested : False
+*This Log was made automatically.
+
+Security Type : default
+Number of speakers : 320
+Number of users(total) : 1420
+Number of messages(speaker) : 491
+
+###############################
+
+###############################
+
+{USER LIST - BY ID}
+0000-00AA
+0000-00AA
+0000-00AA
+0000-00AA
+0000-00AA
+0000-00AA
+0000-00AA
+0000-00AA
+
+###############################
+@ IF YOU SEE THIS MESSAGE, THIS HISTORY
+@ HAS NOT BEEN REVIEWED OR EDITED -
+
+@This file is not for public.
+
+[20240101-08:22:41]<system> (hidden) channel was made.
