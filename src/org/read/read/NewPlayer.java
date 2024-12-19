@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +14,12 @@ import java.util.stream.Collectors;
 public class NewPlayer {
 	static Random rand = new Random();
 
-	static final String desktopPath = "C:\\\\Users\\\\uu04\\\\desktop";
 	static final String libraryPath = "C:\\\\Users\\\\uu04\\\\desktop\\\\History";
-	static final String UserlibraryPath = "C:\\\\Users\\\\uu04\\\\desktop\\\\History\\\\Userdata";
+	static final String UserlibraryPath = libraryPath+"\\\\Userdata";
 	
-	static final String OriginPath = "C:\\Users\\uu04\\Desktop\\History\\Userdata\\0000-00AA";
+	static final String OriginPath = libraryPath+"\\Userdata\\0000-00AA";
 	static final String[] UserComponents = {"channelhistory.txt","inventoryreport.txt"
-			, "loginhistory.txt"
-			, "logouthistory.txt"
-			, "securityInfo.txt"};
+			, "loginhistory.txt", "logouthistory.txt", "securityInfo.txt"};
 	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 	
@@ -34,6 +30,7 @@ public class NewPlayer {
 			Files.createDirectory(dir);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			textbook.error("IOEXCEPTION");
 			e.printStackTrace();
 		}
 	}
@@ -51,11 +48,13 @@ public class NewPlayer {
 			fw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			textbook.error("IOEXCEPTION");
 			e.printStackTrace();
 		}
 	}
 	
 	public static String TagLine(String s) {
+		String t = s;
 		List<String> list;
 		if(s.contains("${")&&s.contains("}")) {
 			String[] segment = s.split("\\$\\{");
@@ -66,7 +65,12 @@ public class NewPlayer {
 				if(list.get(i).contains("}")) {
 					String code = list.get(i).replace("}", "");
 					if(map.containsKey(code)) s = s.replace("${"+code+"}", map.get(code));
-					if(!map.containsKey(code)) s = s.replace("${"+code+"}", "NULL");
+					if(!map.containsKey(code)) {
+						s = s.replace("${"+code+"}", "NULL");
+						textbook.error("TagLine Error, " + code + " value cannot be found.");
+						textbook.error("ORIGINAL :");
+						textbook.error(t);
+					}
 				}
 			}
 		}
@@ -76,11 +80,13 @@ public class NewPlayer {
 	public static void RegisterPlayer(UUID uuid) {
 		String PlayerName = "PLAYERNAME HERE";
 		
-		int TotalPlayers = 88888;
+		int TotalPlayers = 88;
 		int digit = Integer.toString(TotalPlayers).length();
 		
 		if(digit>4) {
-			System.out.println("Cannot register player " + PlayerName + "(*digit limit reached)");
+			textbook.error("CANNOT REGISTER PLAYER " + PlayerName + "(*digit limit reached)");
+			textbook.error("UUID: " + uuid);
+			textbook.error("Player Num: " + TotalPlayers);
 			return;
 		}
 		String NewID = "";

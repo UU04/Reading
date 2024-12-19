@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dirscan {
-	static final String desktopPath = "C:\\\\Users\\\\uu04\\\\desktop";
 	static final String libraryPath = "C:\\\\Users\\\\uu04\\\\desktop\\\\History";
 	
 	static final Boolean ForceCheckEsFile = true;
@@ -34,7 +33,7 @@ public class Dirscan {
 		if(ForceCheckEsFile) {
 			for (int i = 0; i < EssentialFiles.length; i++) {
 				if(!fileList.contains(EssentialFiles[i])) {
-					System.out.println("[!] CANNOT FIND ESSENTIAL PLUGIN FILE : " + EssentialFiles[i]);
+					textbook.error("CANNOT FIND ESSENTIAL PLUGIN FILE : " + EssentialFiles[i] + "; SEARCH RECOMMENDED");
 				}
 			}
 		}
