@@ -23,18 +23,6 @@ public class NewPlayer {
 	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 	
-	public static void CreateDir(String dirPath) {
-		Path dir = Path.of(dirPath);
-		if(Files.exists(dir)) return;
-		try {
-			Files.createDirectory(dir);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			textbook.error("IOEXCEPTION");
-			e.printStackTrace();
-		}
-	}
-	
 	public static void Write(String originpath, String newpath) {
 		List<String> a = ReadModule.read(originpath, false);
 		String all = "";
@@ -120,7 +108,7 @@ public class NewPlayer {
 		String PlayerPath = UserlibraryPath + "\\\\" + PlayerID;
 		
 		//1. create player directory
-		CreateDir(PlayerPath);
+		Dirscan.CreateDir(PlayerPath);
 		
 		//2. copy files(auto-tagged)
 		for (int i = 0; i < UserComponents.length; i++) {

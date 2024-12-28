@@ -20,7 +20,6 @@ public class ReadModule {
 	    	n++;
 	        String data = myReader.nextLine();
 	        list.add(data);
-	        System.out.println(data);
 	        continue; 
 	      }
 	      myReader.close();

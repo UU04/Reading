@@ -39,4 +39,18 @@ public class Dirscan {
 		}
 		return;
 	}
+	
+
+	
+	public static void CreateDir(String dirPath) {
+		Path dir = Path.of(dirPath);
+		if(Files.exists(dir)) return;
+		try {
+			Files.createDirectory(dir);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			textbook.error("IOEXCEPTION");
+			e.printStackTrace();
+		}
+	}
 }
