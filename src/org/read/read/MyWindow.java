@@ -27,8 +27,8 @@ public class MyWindow {
 
 	private JFrame frmChannelManagementConsole;
 	private JPasswordField E_passwordField;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField code;
+	private JTextField maxcap;
 	private JPasswordField MS_passwordField;
 
 	final static JLabel panel = new JLabel("T: time C: count");
@@ -140,20 +140,6 @@ public class MyWindow {
 		list.setBounds(12, 68, 135, 333);
 		frmChannelManagementConsole.getContentPane().add(list);
 
-		JButton REG_btn = new JButton("REGISTER");
-		REG_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
-				        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				    // yes option
-					
-				} else {
-				    // no option
-				}
-			}
-		});
-		REG_btn.setBounds(437, 228, 135, 23);
-		frmChannelManagementConsole.getContentPane().add(REG_btn);
 
 		JButton btnNewButton_1_1 = new JButton("DELETE");
 		btnNewButton_1_1.setBounds(162, 227, 82, 23);
@@ -163,10 +149,10 @@ public class MyWindow {
 		btnNewButton_1_1_1.setBounds(162, 194, 82, 23);
 		frmChannelManagementConsole.getContentPane().add(btnNewButton_1_1_1);
 
-		textField = new JTextField();
-		textField.setBounds(456, 78, 116, 21);
-		frmChannelManagementConsole.getContentPane().add(textField);
-		textField.setColumns(10);
+		code = new JTextField();
+		code.setBounds(456, 78, 116, 21);
+		frmChannelManagementConsole.getContentPane().add(code);
+		code.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("CODE(option)");
 		lblNewLabel_1.setBounds(362, 81, 82, 15);
@@ -176,10 +162,10 @@ public class MyWindow {
 		lblNewLabel_1_1.setBounds(347, 112, 97, 15);
 		frmChannelManagementConsole.getContentPane().add(lblNewLabel_1_1);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(456, 109, 116, 21);
-		frmChannelManagementConsole.getContentPane().add(textField_1);
+		maxcap = new JTextField();
+		maxcap.setColumns(10);
+		maxcap.setBounds(456, 109, 116, 21);
+		frmChannelManagementConsole.getContentPane().add(maxcap);
 
 		JCheckBox chckbxNewCheckBox = new JCheckBox("DELETE RES?");
 		chckbxNewCheckBox.setBounds(456, 136, 115, 23);
@@ -193,6 +179,57 @@ public class MyWindow {
 		chckbxNoApprove.setBounds(456, 183, 115, 23);
 		frmChannelManagementConsole.getContentPane().add(chckbxNoApprove);
 
+		JButton REG_btn = new JButton("REGISTER");
+		REG_btn.setBounds(437, 228, 135, 23);
+		frmChannelManagementConsole.getContentPane().add(REG_btn);
+		
+		REG_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				if(progressBar.getValue() < 50) {
+//					JOptionPane.showMessageDialog(null, "SERVICE NOT ENABLED.");
+//					return;
+//				}
+//				if(!comboBox.getSelectedItem().toString().contains("MANUAL")) {
+//					JOptionPane.showMessageDialog(null, "SERVICE MODE IS NOT MANUAL.");
+//					return;
+//				}
+				String xcode = code.getText();
+				String xcap = maxcap.getText();
+				int cap;
+				if(!math.isNumeric(xcap) && !xcap.isBlank()) {
+					JOptionPane.showMessageDialog(null, "Max. Capacity Error(Not Numeric)");
+					return;
+				}
+				if (JOptionPane.showConfirmDialog(null, "Max. Capacity = 0?", "",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+					return;
+				} else {
+					cap=0;
+				}
+				if(xcode.isBlank()) xcode = "Not Signed";
+				Boolean isPub = chckbxPublic.isSelected();
+				Boolean isNA = chckbxNoApprove.isSelected();
+				Boolean isDELRES = chckbxNewCheckBox.isSelected();
+				
+				String msg = "Channel Code : " + xcode + "   [MAX CAP " + cap + "]  \n\n";
+				if(isPub) msg += " [PUBLIC] ";
+				if(isNA) msg += " [NO APPROVE] ";
+				if(isDELRES) msg += "[DELETE RESERVATION] ";
+				
+				if (JOptionPane.showConfirmDialog(null, "Are you sure? "+msg, "WARNING",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					// yes option
+					String nex = xcode;
+					if(isPub) nex = "public_" +nex;
+					if(!isPub) nex = "private_"+nex;
+					System.out.println(nex);
+					channel.RegisterChannel(xcode, isPub);
+				} else {
+					// no option
+				}
+			}
+		});
+		
 		JButton btnNewButton_1_1_1_1 = new JButton("CALL-CH");
 		btnNewButton_1_1_1_1.setBounds(162, 161, 121, 23);
 		frmChannelManagementConsole.getContentPane().add(btnNewButton_1_1_1_1);
@@ -215,5 +252,11 @@ public class MyWindow {
 		JLabel lblNewLabel_1_1_1 = new JLabel("MASTER PIN");
 		lblNewLabel_1_1_1.setBounds(321, 211, 97, 15);
 		frmChannelManagementConsole.getContentPane().add(lblNewLabel_1_1_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Made by captain0potlid @Team Dotmagic");
+		lblNewLabel_2.setBounds(329, 386, 255, 15);
+		frmChannelManagementConsole.getContentPane().add(lblNewLabel_2);
+		
+		
 	}	
 }

@@ -7,12 +7,14 @@ import java.util.Random;
 import java.util.UUID;
 
 public class channel {
+	static final String libraryPath = "C:\\Users\\uu04\\Desktop\\History\\ChannelLive.txt";
+	static final String ORlibraryPath = "C:\\Users\\uu04\\Desktop\\History\\origins\\ChannelLive.txt";
+	
 	static Random rand = new Random();
 	static char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
 	
 	static List<String> channelList = new ArrayList();
 	
-	static HashMap<UUID, String> channel_map = new HashMap<UUID, String>();
 	
 	public static String NewChannelCode() {
 		int iVal = rand.nextInt(26);
@@ -21,8 +23,11 @@ public class channel {
 		return r;
 	}
 	
-	public static void RegisterChannel(Boolean isPublic) {
-		String t = NewChannelCode();
+	public static void RegisterChannel(String optionCode, Boolean isPublic) {
+		String t="";
+		if(optionCode == null) t = NewChannelCode();
+		if(optionCode != null) t = optionCode;
+		
 		int count = 0;
 		while (channelList.contains(t)) {
 			if(count==3) {
@@ -33,8 +38,30 @@ public class channel {
 			count++;
 		}
 		
+		if(isPublic) t = "public_"+t;
+		if(!isPublic) t = "private_"+t;
+		
 		channelList.add(t);
-		textbook.info("New channel has been created. " + t + "(Public: " + isPublic + ")");
+		textbook.info("New channel has been created. " + t);
+		
+		HashMap<String, String> temp = new HashMap<String, String>();
+		
+		for (int i = 0; i < channelList.size(); i++) {
+			String thisCH = channelList.get(i);
+			
+			if(thisCH.split("_").length < 2) {
+				textbook.error("ArrayOutOfBound - channel creation failed.");
+				return;
+			}
+			
+			String prefix = thisCH.split("_")[0];
+			String name = thisCH.split("_")[1];
+			
+			if(temp.containsKey(prefix)) temp.put(prefix, temp.get(prefix)+"\n"+name);
+			if(!temp.containsKey(prefix)) temp.put(prefix, name);
+		}
+		
+		NewPlayer.Write(ORlibraryPath, libraryPath, temp);
 	}
 	
 	public static void disableChannel(String channelCode) {
@@ -52,15 +79,6 @@ public class channel {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println();
-		for (int i = 0; i < 10; i++) {
-			RegisterChannel(false);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	
 	}
 }

@@ -23,11 +23,11 @@ public class NewPlayer {
 	
 	public static HashMap<String, String> map = new HashMap<String, String>();
 	
-	public static void Write(String originpath, String newpath) {
+	public static void Write(String originpath, String newpath, HashMap<String, String> map) {
 		List<String> a = ReadModule.read(originpath, false);
 		String all = "";
 		for (int i = 0; i < a.size(); i++) {
-			String afterTag = TagLine(a.get(i));
+			String afterTag = TagLine(a.get(i), map);
 			all += afterTag+"\n";
 		}
 		try {
@@ -41,7 +41,7 @@ public class NewPlayer {
 		}
 	}
 	
-	public static String TagLine(String s) {
+	public static String TagLine(String s, HashMap<String, String> map) {
 		String t = s;
 		List<String> list;
 		if(s.contains("${")&&s.contains("}")) {
@@ -54,6 +54,10 @@ public class NewPlayer {
 					String code = list.get(i).replace("}", "");
 					if(map.containsKey(code)) s = s.replace("${"+code+"}", map.get(code));
 					if(!map.containsKey(code)) {
+						if("public, private, event".contains(code)) {
+							s = s.replace("${"+code+"}", "");
+							continue;
+						}
 						s = s.replace("${"+code+"}", "NULL");
 						textbook.error("TagLine Error, " + code + " value cannot be found.");
 						textbook.error("ORIGINAL :");
@@ -113,7 +117,7 @@ public class NewPlayer {
 		//2. copy files(auto-tagged)
 		for (int i = 0; i < UserComponents.length; i++) {
 			String a = UserComponents[i];
-			Write(OriginPath+"\\\\"+a, PlayerPath+"\\\\"+a);	
+			Write(OriginPath+"\\\\"+a, PlayerPath+"\\\\"+a, map);	
 		}
 	}
 }
